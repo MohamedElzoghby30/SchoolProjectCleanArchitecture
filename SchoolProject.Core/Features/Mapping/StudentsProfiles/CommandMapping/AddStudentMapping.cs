@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using SchoolProject.Core.Features.Students.Commands.Models;
 using SchoolProject.Core.Features.Students.Queries.Resluts;
 using SchoolProject.Data.Entities;
 using System;
@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace SchoolProject.Core.Features.Mapping.StudentsProfiles
 {
-    public partial class StudentProfile : Profile
+    public partial class StudentProfile
     {
-        public StudentProfile()
+        public void AddStudentMapping()
         {
-            GetStudentListMapping();
-            AddStudentMapping();
+
+            CreateMap<AddStudentCommand,Student >()
+               .ForMember(dest => dest.DID, opt => opt.MapFrom(src => src.DID));
 
         }
     }

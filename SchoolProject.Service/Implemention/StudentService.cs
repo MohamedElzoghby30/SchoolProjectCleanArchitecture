@@ -1,4 +1,5 @@
-﻿using SchoolProject.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using SchoolProject.Data.Entities;
 using SchoolProject.Infastructure.Abstracts;
 using SchoolProject.Infastructure.Data;
 using SchoolProject.Infastructure.Repositories;
@@ -22,11 +23,37 @@ namespace SchoolProject.Service.Implemention
         {
             _studentRepository = studentRepository;
         }
+
+      
         #endregion
         #region Handeler Functions
         public async Task<List<Student>> GetStudentsListAsync()
         {
             return await _studentRepository.GetStudentsListAsync();
+        }
+        public async Task<string> AddStudentAsync(Student student)
+        {
+           var StudentReslut=await _studentRepository
+                .GetTableNoTracking()
+                .Where(x=>x.Name==student.Name)
+                .FirstOrDefaultAsync();
+            if (StudentReslut != null) return "Not Exist";
+            else {
+
+              await _studentRepository.AddAsync(student);
+                return "Success";
+            }
+               
+
+        }
+
+        public async Task<Student> GetStudentByIdAsync(int id)
+        {
+            var student = await _studentRepository.GetTableNoTracking()
+                .Where(x => x.StudID.Equals(id))
+                .Include(x => x.Department)
+                .FirstOrDefaultAsync();
+            return student;
         }
         #endregion
     }

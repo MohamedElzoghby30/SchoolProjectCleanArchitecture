@@ -25,6 +25,7 @@ namespace SchoolProject.API
                 option.UseSqlServer(builder.Configuration.GetConnectionString("dbcontext"));
             });
             #region Dependency Injection
+
             builder.Services.AddInfastructureDependcies()
                             .AddServiceDependcies()
                             .AddModuleCoreDependcies();

@@ -12,10 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Students\Commands\Handel\" />
-    <Folder Include="Features\Students\Commands\Models\" />
-    <Folder Include="Features\Students\Commands\" />
     <Folder Include="Features\Students\Commands\Validation\" />
+    <Folder Include="Features\Subjects\Commands\Handel\" />
+    <Folder Include="Features\Subjects\Commands\Models\" />
+    <Folder Include="Features\Subjects\Commands\Validation\" />
   </ItemGroup>
 
   <ItemGroup>

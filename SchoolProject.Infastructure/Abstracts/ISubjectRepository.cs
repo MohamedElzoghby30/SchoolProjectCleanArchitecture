@@ -1,5 +1,4 @@
 ﻿using SchoolProject.Data.Entities;
-using SchoolProject.Infastructure.InfastructureBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace SchoolProject.Infastructure.Abstracts
 {
-    public interface IStudentRepository :IGenericRepositoryAsync<Student>
+    public interface ISubjectRepository
     {
-        Task<List<Student>> GetStudentsListAsync();
+        Task<List<Subjects>> GetAllSubjectAsync();
     }
 }
