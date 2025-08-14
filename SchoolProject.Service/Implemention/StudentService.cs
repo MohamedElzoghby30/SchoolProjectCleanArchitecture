@@ -33,18 +33,8 @@ namespace SchoolProject.Service.Implemention
         }
         public async Task<string> AddStudentAsync(Student student)
         {
-           var StudentReslut=await _studentRepository
-                .GetTableNoTracking()
-                .Where(x=>x.Name==student.Name)
-                .FirstOrDefaultAsync();
-            if (StudentReslut != null) return "Not Exist";
-            else {
-
               await _studentRepository.AddAsync(student);
                 return "Success";
-            }
-               
-
         }
 
         public async Task<Student> GetStudentByIdAsync(int id)
@@ -54,6 +44,16 @@ namespace SchoolProject.Service.Implemention
                 .Include(x => x.Department)
                 .FirstOrDefaultAsync();
             return student;
+        }
+
+        public async Task<bool> IsExsitAsync(string Name)
+        {
+            var StudentReslut = await _studentRepository
+               .GetTableNoTracking()
+               .Where(x => x.Name == Name)
+               .FirstOrDefaultAsync();
+            if (StudentReslut == null) return false;
+            return true;
         }
         #endregion
     }
