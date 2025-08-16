@@ -15,6 +15,7 @@ namespace SchoolProject.Core.Features.Mapping.StudentsProfiles
         {
             GetStudentListMapping();
             AddStudentMapping();
+            EditStudentMapping();
 
         }
     }

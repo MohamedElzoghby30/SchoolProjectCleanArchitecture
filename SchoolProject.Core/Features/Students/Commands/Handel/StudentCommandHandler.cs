@@ -4,11 +4,13 @@ using SchoolProject.Core.Basic;
 using SchoolProject.Core.Features.Students.Commands.Models;
 using SchoolProject.Data.Entities;
 using SchoolProject.Service.Abstracts;
-using System.ComponentModel.Design;
 
 namespace SchoolProject.Core.Features.Students.Commands.Handel
 {
     public class StudentCommandHandler : ResponseHandler, IRequestHandler<AddStudentCommand, Response<string>>
+                                                        , IRequestHandler<EditStudentCommand, Response<string>>
+
+
     { 
         private readonly IStudentService _studentService;
         private readonly IMapper _mapper;
@@ -23,11 +25,25 @@ namespace SchoolProject.Core.Features.Students.Commands.Handel
         {
             var StudentMapping = _mapper.Map<Student>(request);
             var Reslut= await _studentService.AddStudentAsync(StudentMapping);
-            if (Reslut == "Not Exist")
-                return UnprocessableEntity<string>("this element not exsit");
-            else if (Reslut == "Success")
+           if (Reslut == "Success")
               return Success<string>("Added Done");
             else 
+                return BadRequest<string>();
+        }
+
+        public async Task<Response<string>> Handle(EditStudentCommand request, CancellationToken cancellationToken)
+        {
+            //check Id is exsit 
+            var studentDB = await _studentService.GetStudentByIdAsync(request.StudID);
+            if (studentDB == null)
+                return NotFound<string>("Student Not Found");
+            // Map
+             var StudentMapping = _mapper.Map<Student>(request);
+             var Reslut = await _studentService.UpdateStudentAsync(StudentMapping);
+       
+            if (Reslut == "Success")
+                return Success<string>($"Update Succees for StudentId {studentDB.StudID}");
+            else
                 return BadRequest<string>();
         }
     }

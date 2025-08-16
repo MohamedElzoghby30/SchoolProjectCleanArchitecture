@@ -55,6 +55,14 @@ namespace SchoolProject.Service.Implemention
             if (StudentReslut == null) return false;
             return true;
         }
+
+        public async Task<string> UpdateStudentAsync(Student student)
+        {
+            await _studentRepository.UpdateAsync(student);
+            return "Success";
+
+        }
+           
         #endregion
     }
 }

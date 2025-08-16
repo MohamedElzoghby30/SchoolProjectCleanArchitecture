@@ -19,16 +19,22 @@ namespace SchoolProject.API.Controllers
             var result = await Mediator.Send(new GetStudentListQuery());
             return NewResult(result);
         }
-        [HttpGet("/Student/{id}/")]
+        [HttpGet("/Student/{id}")]
         public async Task<IActionResult> GetStudentsByIdAsync( [FromRoute]int id)
         {
             var result = await Mediator.Send(new GetStudentByIdQuery(id));
             return NewResult(result);
         }
-        [HttpPost("/Student/Create/")]
+        [HttpPost("/Student/Create")]
         public async Task<IActionResult> CreateStudentAsync([FromBody] AddStudentCommand addStudentCommand)
         {
             var result = await Mediator.Send(addStudentCommand);
+            return NewResult(result);
+        }
+        [HttpPut("/Student/Update")]
+        public async Task<IActionResult> UpdateStudentsByIdAsync([FromBody] EditStudentCommand EditStudentCommand)
+        {
+            var result = await Mediator.Send(EditStudentCommand);
             return NewResult(result);
         }
     }
