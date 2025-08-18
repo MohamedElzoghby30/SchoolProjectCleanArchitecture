@@ -9,6 +9,7 @@ namespace SchoolProject.Core.Features.Students.Commands.Handel
 {
     public class StudentCommandHandler : ResponseHandler, IRequestHandler<AddStudentCommand, Response<string>>
                                                         , IRequestHandler<EditStudentCommand, Response<string>>
+                                                        , IRequestHandler<DeleteStudentCommand, Response<string>>
 
 
     { 
@@ -43,6 +44,20 @@ namespace SchoolProject.Core.Features.Students.Commands.Handel
        
             if (Reslut == "Success")
                 return Success<string>($"Update Succees for StudentId {studentDB.StudID}");
+            else
+                return BadRequest<string>();
+        }
+
+        public async Task<Response<string>> Handle(DeleteStudentCommand request, CancellationToken cancellationToken)
+        {
+            var studentDB = await _studentService.GetByIdAsync(request.ID);
+            if (studentDB == null)
+                return NotFound<string>("Student Not Found");
+            
+                var Reslut = await _studentService.DeleteAsync(studentDB);
+
+            if (Reslut == "Success")
+                return Deleted<string>($"Deleted Succees for StudentId {studentDB.StudID}");
             else
                 return BadRequest<string>();
         }
