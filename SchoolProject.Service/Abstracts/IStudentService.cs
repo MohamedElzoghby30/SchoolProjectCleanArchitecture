@@ -11,5 +11,7 @@ namespace SchoolProject.Service.Abstracts
         public Task<string> UpdateStudentAsync(Student student);
         public Task<bool> IsExsitAsync(string Name);
         public Task<string> DeleteAsync(Student student);
+        public IQueryable<Student> GetStudentsQuerable();
+        public IQueryable<Student> FilterStudentsPagnatedQuerable(string search);
     }
 }

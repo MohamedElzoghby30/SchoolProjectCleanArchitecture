@@ -87,6 +87,22 @@ namespace SchoolProject.Service.Implemention
                 .FirstOrDefaultAsync();
             return student;
         }
+        public IQueryable<Student> GetStudentsQuerable()
+        {
+            return _studentRepository.GetTableNoTracking().Include(x => x.Department).AsQueryable();
+        }
+
+        public IQueryable<Student> FilterStudentsPagnatedQuerable(string search)
+        {
+          var qureyble=  _studentRepository.GetTableNoTracking().Include(x => x.Department).AsQueryable();
+            if(search!=null || !search.Equals(string.Empty))          
+            {
+                qureyble = qureyble.Where(x => x.Name.ToUpper().Contains(search.ToUpper()) || x.Address.ToUpper().Contains(search.ToUpper()));
+            }
+           
+            return qureyble;
+        }
+
 
         #endregion
     }
